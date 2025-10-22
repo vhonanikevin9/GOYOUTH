@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoYouth Publishing House (PTY) Ltd</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-primary: #0b1a2e; /* Dark Navy/Teal */
+            --color-accent: #f05a28;  /* Bright Orange/Coral */
+            --color-text-secondary: #607d8b; /* Grayish Blue */
+            --color-gradient-start: #0b1a2e;
+            --color-gradient-end: #1a365d;
+        }
+        
+        /* Font Styles */
+        .font-heading {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        
+        .font-body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* --- BACKGROUND STYLES --- */
+        
+        /* Hero Background Styling */
+        .hero-bg {
+            background-image: linear-gradient(135deg, var(--color-gradient-start) 0%, var(--color-gradient-end) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        /* Mission Section Background - Faded Bookshelf */
+        .mission-bg-faded {
+            background-image: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .mission-bg-faded::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.85);
+            z-index: 1;
+        }
+
+        /* Utility Classes */
+        .bg-primary { background-color: var(--color-primary); }
+        .text-primary { color: var(--color-primary); }
+        .bg-accent { background-color: var(--color-accent); }
+        .text-accent { color: var(--color-accent); }
+        .text-secondary { color: var(--color-text-secondary); }
+        
+        /* Service Card Animations */
+        .service-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateY(0);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Service Icon Animations */
+        .service-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover .service-icon {
+            transform: scale(1.2);
+            color: var(--color-accent);
+        }
+        
+        /* Floating Animation for Book Images */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Glow Effect */
+        .glow {
+            box-shadow: 0 0 20px rgba(240, 90, 40, 0.3);
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--color-accent) 0%, #ff8a5c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="font-body bg-gray-50 text-gray-800 min-h-screen">
+
+    <nav class="bg-white shadow-lg sticky top-0 z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                <div class="flex-shrink-0 pr-4">
+                    <a href="#home" onclick="navigate('home')" class="cursor-pointer">
+                        <img class="h-20 w-auto" 
+                             src="GoYouth Publishing house (PTY) Ltd no bg.png" 
+                             alt="GoYouth Publishing Logo">
+                    </a>
+                </div>
+                
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                    <a href="#home" onclick="navigate('home')" 
+                       class="nav-link border-b-2 border-transparent px-3 py-2 text-sm font-medium hover:border-accent hover:text-accent transition duration-300 transform hover:scale-105 text-primary">Home</a>
+                    <a href="#services" onclick="navigate('home', true)" 
+                       class="border-b-2 border-transparent px-3 py-2 text-sm font-medium hover:border-accent hover:text-accent transition duration-300 transform hover:scale-105 text-primary">Services</a>
+                    <a href="#contact" onclick="navigate('contact')" 
+                       class="nav-link border-b-2 border-transparent px-3 py-2 text-sm font-medium hover:border-accent hover:text-accent transition duration-300 transform hover:scale-105 text-primary">Contact & Pricing</a>
+                </div>
+
+                <button id="mobileMenuButton" type="button" class="sm:hidden text-primary hover:text-accent focus:outline-none" aria-expanded="false">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <div id="mobileMenu" class="sm:hidden hidden bg-white shadow-md pb-3">
+            <a href="#home" onclick="navigate('home'); toggleMobileMenu()" 
+               class="nav-link block px-3 py-2 rounded-md text-base font-medium text-primary hover:bg-gray-100">Home</a>
+            <a href="#services" onclick="navigate('home', true); toggleMobileMenu()" 
+               class="block px-3 py-2 rounded-md text-base font-medium text-primary hover:bg-gray-100">Services</a>
+            <a href="#contact" onclick="navigate('contact'); toggleMobileMenu()" 
+               class="nav-link block px-3 py-2 rounded-md text-base font-medium text-primary hover:bg-gray-100">Contact & Pricing</a>
+        </div>
+    </nav>
+
+    <div id="pageContent">
+        </div>
+
+    <div id="floatingImage" class="fixed bottom-6 right-6 z-50 w-32 h-32 md:w-48 md:h-48 transition-opacity duration-500 ease-in-out opacity-0">
+        <img src="464805556_2127851154278202_2494824091573665314_n_upscaled (1).png" 
+             alt="Contact GoYouth" 
+             class="w-full h-full object-contain drop-shadow-lg">
+    </div>
+
+    <footer class="bg-primary text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-sm">&copy; <span id="currentYear"></span> GoYouth Publishing house (PTY) Ltd. All rights reserved.</p>
+            <p class="text-xs mt-2 text-gray-400">Aim: Publishing quality and making dreams valid.</p>
+        </div>
+    </footer>
+
+    <script>
+        const pageContent = document.getElementById('pageContent');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const floatingImage = document.getElementById('floatingImage'); // MODIFIED: Get floating image
+        let currentPage = 'home';
+
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // MODIFIED: Added scroll listener for floating image
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY + window.innerHeight;
+            const pageHeight = document.body.offsetHeight;
+            
+            // Show 400px before reaching the bottom
+            if (pageHeight - scrollPosition < 400) {
+                floatingImage.classList.remove('opacity-0');
+                floatingImage.classList.add('opacity-100');
+            } else {
+                floatingImage.classList.remove('opacity-100');
+                floatingImage.classList.add('opacity-0');
+            }
+        });
+
+        // --- NAVIGATION AND ROUTING ---
+
+        /**
+         * Simple client-side routing.
+         * @param {string} page - The page to navigate to ('home' or 'contact').
+         * @param {boolean} scrollToServices - If true, scrolls to the services section on the home page.
+         */
+        function navigate(page, scrollToServices = false) {
+            currentPage = page;
+            if (page === 'home') {
+                renderHomePage(scrollToServices);
+            } else if (page === 'contact') {
+                renderContactPage();
+            }
+            // FIX: If we are not specifically scrolling to the Services section,
+            // we smooth scroll to the top of the page. This fixes the Home button.
+            if (!scrollToServices) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+        // --- ICON MAPPING FOR SERVICES ---
+
+        /**
+         * Returns an SVG icon path based on the service name.
+         * @param {string} serviceName - The service name.
+         * @returns {string} The SVG path data.
+         */
+        function getServiceIcon(serviceName) {
+            switch (serviceName) {
+                case 'MANUSCRIPT REVIEW':
+                    return '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />'; // Document with magnifying glass
+                case 'EDITING':
+                    return '<path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />'; // Pencil
+                case 'GRAMMAR CHECK & PROOFREADING':
+                    return '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />'; // Checkmark in circle
+                case 'LAYOUT DESIGN':
+                    return '<path stroke-linecap="round" stroke-linejoin="round" d="M3 8.25V18a2.25 2.25 0 002.25 2.25h13.5A2.25 2.25 0 0021 18V8.25m-18 0V6a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 6v2.25m-18 0h18M5.25 6h.008v.008H5.25V6zM7.5 6h.008v.008H7.5V6zm2.25 0h.008v.008H9.75V6z" />'; // Layout
+                case 'ISBN & REGISTRATION':
+                    return '<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" /><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" />'; // Barcode
+                case 'PRINTING & DISTRIBUTION':
+                    return '<path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />'; // Printer with paper
+                case 'GHOST WRITING':
+                    return '<path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />'; // Pencil with ghost effect
+                default:
+                    return '<path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />'; // Book
+            }
+        }
+
+        // --- PAGE RENDERING FUNCTIONS ---
+
+        function renderHomePage(scrollToServices) {
+            pageContent.innerHTML = `
+                <div class="hero-bg relative min-h-[80vh] flex items-center justify-center p-4">
+                    <div class="relative z-10 max-w-4xl text-center text-white">
+                        <p class="text-xl sm:text-2xl text-accent font-heading mb-2">GoYouth Publishing House (PTY) Ltd</p>
+                        <h1 class="font-heading text-5xl sm:text-7xl font-extrabold leading-tight mb-4">
+                            YOUR DREAMS ARE <span class="gradient-text">VALID</span>
+                        </h1>
+                        <p class="text-lg sm:text-2xl mb-8">
+                            PUBLISH YOUR WORK WITH GOYOUTH PUBLISHING HOUSE AT AN <span class="font-bold text-accent">AFFORDABLE PRICE</span>
+                        </p>
+                        <a href="#services-section" onclick="smoothScrollTo('services-section')" 
+                           class="inline-block bg-accent text-white font-semibold py-3 px-8 rounded-full text-lg shadow-xl hover:bg-opacity-90 transition duration-300 transform hover:scale-105 glow">
+                           Explore Services
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mission-bg-faded max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 shadow-xl -mt-16 relative z-10 rounded-xl">
+                    <div class="relative z-10 grid md:grid-cols-3 gap-8 items-center">
+                        
+                        <div class="flex justify-center md:order-2">
+                            <div class="w-40 h-40 md:w-56 md:h-56 bg-primary rounded-full flex flex-col items-center justify-center shadow-2xl overflow-hidden ring-4 ring-offset-4 ring-accent floating">
+                                <img src="WhatsApp Image 2025-10-22 at 00.00.54.jpeg" 
+                                     alt="Book Idea" class="w-full h-full object-cover">
+                                </div>
+                        </div>
+
+                        <div class="md:order-1 md:col-span-2 text-center md:text-left">
+                            <h2 class="font-heading text-4xl mb-4 text-primary">Our Vision</h2>
+                            <p class="text-xl text-primary font-semibold mb-3">Publish your manuscript from as little as <span class="text-accent text-2xl">R3500</span>.</p>
+                            <p class="text-xl mb-2">
+                                <span class="font-heading text-accent text-2xl">AIM:</span> Publishing quality and making dreams valid.
+                            </p>
+                            <p class="text-xl mb-4">
+                                <span class="font-heading text-accent text-2xl">MISSION:</span> Turn out your life experiences into amazing memories, publishing amazing ideas into real, amazing books.
+                            </p>
+                            <p class="text-secondary italic font-medium">CHOOSE US: WE SUPPORT YOU THROUGH YOUR JOURNEY OF AUTHORSHIP.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="services-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                    <h2 class="font-heading text-4xl text-center mb-12 text-primary border-b-4 border-accent pb-2 inline-block mx-auto">
+                        OUR SERVICES
+                    </h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        
+                        ${['MANUSCRIPT REVIEW', 'EDITING', 'GRAMMAR CHECK & PROOFREADING', 'LAYOUT DESIGN', 'ISBN & REGISTRATION', 'PRINTING & DISTRIBUTION', 'GHOST WRITING'].map(service => `
+                            <div class="service-card bg-white p-6 rounded-xl shadow-lg border-t-4 border-accent flex flex-col items-center text-center">
+                                <svg class="h-12 w-12 text-primary mb-4 service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+                                    ${getServiceIcon(service)}
+                                </svg>
+                                <h3 class="text-xl font-bold text-primary mb-2">${service}</h3>
+                                <p class="text-gray-600 text-sm">
+                                    ${service.includes('GHOST WRITING') ? 'Let us turn your amazing ideas and life experiences into a publishable book with our expert ghost writing services.' :
+                                    service.includes('EDITING') ? 'In-depth linguistic and structural editing to polish your manuscript to perfection.' :
+                                    service.includes('LAYOUT') ? 'Professional interior formatting and design for print and digital editions.' :
+                                    service.includes('MANUSCRIPT REVIEW') ? 'Comprehensive evaluation of your manuscript with constructive feedback and recommendations.' :
+                                    service.includes('GRAMMAR') ? 'Thorough grammar checking and proofreading to ensure error-free content.' :
+                                    service.includes('ISBN') ? 'Assistance with ISBN acquisition and registration with relevant authorities.' :
+                                    'High-quality printing solutions and distribution channels to get your book to readers.'}
+                                </p>
+                            </div>
+                        `).join('')}
+
+                    </div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                    <div class="bg-primary text-white p-8 sm:p-12 rounded-xl shadow-2xl flex flex-col md:flex-row justify-between items-center">
+                        <div class="mb-6 md:mb-0 md:w-3/4">
+                            <h3 class="font-heading text-3xl mb-2 text-accent">Ready to Start Your Journey?</h3>
+                            <p class="text-lg text-gray-200">
+                                Contact us today for a manuscript review and let's make your publishing dream a reality.
+                            </p>
+                        </div>
+                        <div class="flex flex-col space-y-3">
+                            <a href="tel:0723828470" class="flex items-center text-lg font-semibold hover:text-accent transition duration-150">
+                                <svg class="w-6 h-6 mr-2 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.373 18 3 13.627 3 8V5z"></path></svg>
+                                0723828470
+                            </a>
+                            <a href="mailto:goyouthpublishing@gmail.com" class="flex items-center text-lg font-semibold hover:text-accent transition duration-150">
+                                <svg class="w-6 h-6 mr-2 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                                goyouthpublishing@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center my-8">
+                    <div class="w-40 h-40 md:w-56 md:h-56 bg-primary rounded-full flex flex-col items-center justify-center shadow-2xl overflow-hidden ring-4 ring-offset-4 ring-accent floating">
+                        <img src="WhatsApp Image 2025-10-22 at 00.00.53.jpeg" 
+                             alt="Your Manuscript" class="w-full h-full object-cover">
+                        </div>
+                </div>
+            `;
+            
+            // Scroll logic after rendering
+            if (scrollToServices) {
+                setTimeout(() => {
+                    smoothScrollTo('services-section');
+                }, 100); // Small delay to ensure rendering is complete
+            }
+        }
+
+        function renderContactPage() {
+            pageContent.innerHTML = `
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                    <h2 class="font-heading text-5xl text-center mb-10 text-primary">
+                        Contact & Pricing
+                    </h2>
+                    
+                    <div class="bg-white p-8 rounded-xl shadow-2xl border-t-8 border-accent mb-12">
+                        <h3 class="font-heading text-3xl mb-4 text-accent">Affordable Publishing Starts Here</h3>
+                        <p class="text-2xl text-primary mb-6">
+                            Publish your manuscript from as little as <span class="font-bold text-4xl text-accent">R3500</span>
+                        </p>
+                        <ul class="text-gray-700 space-y-3 list-disc list-inside ml-4">
+                            <li>This price includes core services like Manuscript Review and basic Layout Design.</li>
+                            <li>Pricing is tailored based on manuscript length and the complexity of editing required.</li>
+                            <li>Contact us for a free, no-obligation quote based on your specific needs.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-100 p-8 rounded-xl shadow-lg border-l-4 border-primary grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="font-heading text-2xl mb-4 text-primary">Get in Touch</h3>
+                            <p class="mb-4 text-gray-700">
+                                Use the contact information below to submit your manuscript details and ask any questions you have about the publishing process.
+                            </p>
+                            
+                            <div class="space-y-4">
+                                <p class="flex items-center text-primary font-semibold">
+                                    <svg class="w-6 h-6 mr-3 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                                    Email: goyouthpublishing@gmail.com
+                                </p>
+                                <p class="flex items-center text-primary font-semibold">
+                                    <svg class="w-6 h-6 mr-3 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.373 18 3 13.627 3 8V5z"></path></svg>
+                                    Phone: 0723828470
+                                </p>
+                                <p class="flex items-center text-primary font-semibold">
+                                    <svg class="w-6 h-6 mr-3 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+                                    Location: Johannesburg, South Africa (Online Services Available Globally)
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-primary p-6 rounded-lg text-white shadow-xl">
+                            <h4 class="font-heading text-2xl mb-3 text-accent">Need a Ghost Writer?</h4>
+                            <p class="text-gray-300">
+                                We also offer specialized **Ghost Writing** services to help you structure, write, and refine your ideas into a compelling manuscript, ready for publication.
+                            </p>
+                            <button onclick="navigate('home', true)" class="mt-4 bg-accent text-primary font-bold py-2 px-4 rounded-lg hover:bg-opacity-90 transition duration-150 text-sm">
+                                View Full Services
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // --- UTILITIES ---
+
+        function smoothScrollTo(id) {
+            document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- INITIALIZATION ---
+        // Set the initial page on load
+        window.onload = function() {
+            navigate('home');
+        };
+    </script>
+</body>
+</html>
