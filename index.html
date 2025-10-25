@@ -188,13 +188,13 @@
         const pageContent = document.getElementById('pageContent');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileMenuButton = document.getElementById('mobileMenuButton');
-        const floatingImage = document.getElementById('floatingImage'); // MODIFIED: Get floating image
+        const floatingImage = document.getElementById('floatingImage'); 
         let currentPage = 'home';
 
         // Set current year in footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
         
-        // MODIFIED: Added scroll listener for floating image
+        // Scroll listener for floating image
         window.addEventListener('scroll', () => {
             const scrollPosition = window.scrollY + window.innerHeight;
             const pageHeight = document.body.offsetHeight;
@@ -223,8 +223,6 @@
             } else if (page === 'contact') {
                 renderContactPage();
             }
-            // FIX: If we are not specifically scrolling to the Services section,
-            // we smooth scroll to the top of the page. This fixes the Home button.
             if (!scrollToServices) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
@@ -393,9 +391,9 @@
 
                     <div class="bg-gray-100 p-8 rounded-xl shadow-lg border-l-4 border-primary grid md:grid-cols-2 gap-8">
                         <div>
-                            <h3 class="font-heading text-2xl mb-4 text-primary">Ready to Start Your Journey?</h3>
+                            <h3 class="font-heading text-2xl mb-4 text-primary">Ready to start your journey?</h3>
                             <p class="mb-4 text-gray-700">
-                                Contact us today for a manuscript review and let's make your publishing dream a reality.
+                                For a professional manuscript review, contact us today. Together, we can transform your publishing dream into a reality.
                             </p>
                             
                             <div class="space-y-4">
@@ -447,4 +445,5 @@
     </script>
 </body>
 </html>
+
 
